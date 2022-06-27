@@ -1,0 +1,21 @@
+package IO;
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
+public class BOJ_10951 {
+
+	public static void main(String[] args) {
+		
+		Scanner s = new Scanner(System.in);
+		int repeat = s.nextInt();
+		// นÝบน
+		for (int i = 0; i<repeat; i++) {
+			int a = s.nextInt();
+			int b = s.nextInt();
+			
+			System.out.println(a+b);
+		}
+		
+	}
+
+}

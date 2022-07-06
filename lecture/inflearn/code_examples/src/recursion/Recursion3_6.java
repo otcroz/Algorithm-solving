@@ -3,7 +3,8 @@ package recursion;
 public class Recursion3_6 {
 
 	public static void main(String[] args) {
-		
+		int data[] = {1,2,3,4,5};
+		int res = findMax(data, 1, 4);
 
 	}
 	

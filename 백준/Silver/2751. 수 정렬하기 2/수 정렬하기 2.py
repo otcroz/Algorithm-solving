@@ -3,7 +3,7 @@ import sys
 
 a = []
 
-size = int(sys.stdin.readline())
+size = int(input())
 
 for i in range(size):
     a.append(int(sys.stdin.readline()))

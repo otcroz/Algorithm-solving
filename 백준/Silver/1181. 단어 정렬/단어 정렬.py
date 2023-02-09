@@ -1,8 +1,10 @@
+import sys
+
 word = []
 N = int(input())
 
 for i in range(N):
-    word.append(input())
+    word.append(sys.stdin.readline().strip())
 
 word = set(word) # 중복 제거
 word = list(word) # 리스트 변환

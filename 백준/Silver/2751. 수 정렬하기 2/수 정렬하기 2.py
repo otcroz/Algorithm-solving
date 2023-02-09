@@ -1,5 +1,6 @@
 import sys
 
+
 a = []
 
 size = int(sys.stdin.readline())
@@ -10,4 +11,4 @@ for i in range(size):
 a.sort()
 
 for i in range(size):
-    print(a[i])
+    sys.stdout.write(str(a[i]) + "\n")

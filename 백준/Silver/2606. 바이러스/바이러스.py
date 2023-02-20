@@ -10,13 +10,11 @@ for i in range(v):
   graph[b] += [a]
 
 visited[1] = 1
-Q = deque([1])
 
-while Q:
-  c = Q.popleft()
-  for node in graph[c]:
+def dfs(v):
+  visited[v] = 1
+  for node in graph[v]:
     if visited[node] == 0:
-      Q.append(node)
-      visited[node] = 1
-
-print(sum(visited) -1)
+      dfs(node)
+dfs(1)
+print(sum(visited)-1)

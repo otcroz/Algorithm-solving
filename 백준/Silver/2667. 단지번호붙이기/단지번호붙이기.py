@@ -1,44 +1,42 @@
-from collections import deque
+#import sys
+#sys.setrecursionlimit(5000)
+#input = sys.stdin.readline
+
 
 N = int(input())
 
 graph = []
-visited = []
-res = []
 cnt = 0
+res = []
+
 dx = [-1, 1, 0, 0]
 dy = [0, 0, -1, 1]
 
 for i in range(N):
   graph.append(list(map(int, input())))
-  visited.append([0]*N)
 
-def bfs(i, j):
+def dfs(i, j):
   global cnt
-  Q = deque([(i,j)])
-  visited[i][j] = 1
-  cnt = 1
+
+  if i < 0 or i>= N or j < 0 or j >= N:
+    return
+
+  if graph[i][j] == 1:
+    graph[i][j] = 0
+    cnt+=1
   
-  while Q:
-    x, y = Q.popleft()
-    
-    for i in range(4):
-      nx = x + dx[i]
-      ny = y + dy[i]
-
-      if 0 <= nx < N and 0 <= ny < N:
-        if graph[nx][ny] == 1 and visited[nx][ny] == 0:
-          Q.append([nx, ny])
-          visited[nx][ny] = 1
-          cnt += 1
-
+    for k in range(4):
+      nx = i + dx[k]
+      ny = j + dy[k]
+      dfs(nx, ny)
+  
 for i in range(N):
   for j in range(N):
-    if 0 <= i < N and 0 <= j < N:
-        if visited[i][j] == 0 and graph[i][j] == 1:
-          bfs(i, j)
-          res.append(cnt)
-          
+      if graph[i][j] == 1:
+        dfs(i, j)
+        res.append(cnt)
+        cnt = 0
+
 res.sort()
 print(len(res))
 for i in res:

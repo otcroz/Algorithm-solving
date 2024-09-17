@@ -9,7 +9,11 @@ cnt = 0
 for i in range(7): # 학년
     for j in range(2): # 성별
         if arr[i][j] > 0:
-            cnt+=1
             if arr[i][j] > k:
+                r = arr[i][j] % k
+                cnt += arr[i][j] // k
+                if r != 0:
+                    cnt += 1
+            else:
                 cnt += 1
 print(cnt)

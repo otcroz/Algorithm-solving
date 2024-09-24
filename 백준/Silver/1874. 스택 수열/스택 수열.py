@@ -1,28 +1,28 @@
-from collections import deque
 import sys
+from collections import deque
 
-cur = 1
-arr = []
-dq = deque()
+input = sys.stdin.readline
+stack = deque()
+arr = [] # 부호
 flag = 0
+cur = 1 # 현재 숫자
 
 N = int(input())
 
-for i in range(N):
-    num = int(sys.stdin.readline())
+for _ in range(N):
+    num = int(input())
     while cur <= num:
-        dq.append(cur)
+        stack.append(cur)
         arr.append('+')
-        cur += 1
-
-    if dq[-1] == num:
-        dq.pop()
+        cur+=1
+    
+    if stack[-1] == num:
+        stack.pop()
         arr.append('-')
     else:
         print('NO')
         flag = 1
         break
-
 if flag == 0:
     for i in arr:
         print(i)

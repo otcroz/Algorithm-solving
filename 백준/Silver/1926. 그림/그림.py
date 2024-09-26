@@ -1,45 +1,44 @@
+import sys
 from collections import deque
+input = sys.stdin.readline
 
-n, m = map(int, input().split())
-
-graph = []
-link = 0
+nx = [1, -1, 0, 0]
+ny = [0, 0, -1, 1]
 cnt = 0
-res = []
-dx = [-1, 1, 0, 0]
-dy = [0, 0, -1, 1]
+draw = []
+arr = []
 
-def bfs(a, b):
-  global cnt
-  Q = deque([(a,b)])
-  graph[a][b] = 0
-  cnt = 1
-  
-  while Q:
-    x, y = Q.popleft()
+n, m = map(int,input().split())
 
+def bfs(i, j):
+  dq = deque([(i, j)]) # 큐 선언
+  max = 1
+  arr[i][j] = 0
+
+  while dq:
+    x, y = dq.popleft()
     for i in range(4):
-      nx = x + dx[i]
-      ny = y + dy[i]
-
-      if 0 <= nx < n and 0<= ny < m:
-        if graph[nx][ny] == 1:
-          graph[nx][ny] = 0
-          cnt += 1
-          Q.append([nx, ny])
+      dx = x + nx[i]
+      dy = y + ny[i]
+      
+      if dx >= 0 and dx < n and dy >=0 and dy < m:
+        if arr[dx][dy] == 1:
+          arr[dx][dy] = 0
+          max += 1
+          dq.append([dx, dy])
+  draw.append(max)
 
 for _ in range(n):
-  graph.append(list(map(int, input().split())))
-  
+  arr.append(list(map(int, input().split())))
+
 for i in range(n):
   for j in range(m):
-    if graph[i][j] == 1:
-      link += 1
-      bfs(i, j)
-      res.append(cnt)
+    if arr[i][j] == 1:
+      cnt += 1
+      bfs(i,j)
 
-print(link)
-if len(res) == 0:
+print(cnt)
+if len(draw) == 0:
   print(0)
 else:
-  print(max(res))
+  print(max(draw))

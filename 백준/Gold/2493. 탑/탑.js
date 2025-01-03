@@ -5,19 +5,18 @@ let tower = input[1].split(" ");
 tower = tower.map((v) => +v);
 let stack = [];
 let result = [];
-tower.unshift(0);
 
 
-for (let i = 1; i <= num; i++) {
+for (let i = 0; i < num; i++) {
   if (stack.length == 0) {
-    stack.push([i, tower[i]]);
+    stack.push([i+1, tower[i]]);
   } else if (stack[stack.length - 1][1] < tower[i]) {
     while (stack.length > 0 && stack[stack.length - 1][1] < tower[i]) {
       stack.pop();
     }
-    stack.push([i, tower[i]]);
+    stack.push([i+1, tower[i]]);
   } else {
-    stack.push([i, tower[i]]);
+    stack.push([i+1, tower[i]]);
   }
 
   if (stack.length == 1) result.push(0);

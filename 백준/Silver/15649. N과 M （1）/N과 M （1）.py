@@ -1,13 +1,20 @@
-n, m = map(int, input().split())
+a, b = map(int, input().split())
 
-s = []
+visited = [False] * (a+1)
+arr = []
+
 def dfs():
-    if len(s) == m:
-        print(' '.join(map(str, s)))
+    if len(arr) == b:
+        print(' '.join(map(str, arr)))
         return
-    for i in range(1, n+1):
-        if i not in s: # 중복x
-            s.append(i)
+    
+    for i in range(1, a+1):
+        if visited[i]:
+            continue
+        else:
+            visited[i] = True
+            arr.append(i)
             dfs()
-            s.pop() # 부모 노드 이동
+            arr.pop()
+            visited[i] = False
 dfs()

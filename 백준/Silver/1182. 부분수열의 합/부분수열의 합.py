@@ -1,20 +1,16 @@
-arr = []
-count = 0
-add = 1
-
 N, S = map(int, input().split())
-num = list(map(int, input().split()))
+arr = list(map(int, input().split()))
+cnt = 0
+part = []
 
-
-def dfs(start):
-    global count
-    if sum(arr) == S and len(arr) > 0:
-        count += 1
-
+def back(start):
+    global cnt
+    if len(part) >= 1 and sum(part) == S:
+        cnt += 1
     for i in range(start, N):
-        arr.append(num[i])
-        dfs(i + 1)
-        arr.pop()
+        part.append(arr[i])
+        back(i+1)
+        part.pop()
 
-dfs(0)
-print(count)
+back(0)
+print(cnt)

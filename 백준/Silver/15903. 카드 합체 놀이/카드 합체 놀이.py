@@ -1,9 +1,17 @@
+import heapq
+
 N, M = map(int, input().split())
 score = list(map(int, input().split()))
+hq = []
+for i in range(N):
+  heapq.heappush(hq, score[i])
 
 for _ in range(M):
-  score.sort()
-  sum_score = sum(score[:2])
-  score[0], score[1] = sum_score, sum_score
+  first = heapq.heappop(hq)
+  second = heapq.heappop(hq)
+  sum_score = first + second
 
-print(sum(score))
+  for _ in range(2):
+    heapq.heappush(hq, sum_score)
+
+print(sum(hq))

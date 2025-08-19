@@ -1,31 +1,29 @@
-n = int(input())
-m = int(input())
+n = int(input()) # 도시 수
+m = int(input()) # 버스 수
 
 INF = int(1e9)
-graph = [[INF] * (n+1) for _ in range(n+1)]
+dist = [[INF]*n for _ in range(n)]
 
-# 같은 값일 때 0으로 초기화하기
-for i in range(1, n+1):
-  for j in range(1, n+1):
-    if i == j:
-      graph[i][j] = 0
+# 같은 값일 때 0으로 업데이트
+for i in range(n):
+    for j in range(n):
+        if i == j:
+            dist[i][j] = 0
 
-# 그래프에 값 업데이트
+# 값 업데이트
 for _ in range(m):
-  a, b, c = map(int, input().split(" "))
-  graph[a][b] = min(c, graph[a][b])
+    start, end, c = map(int, input().split())
+    dist[start-1][end-1] = min(dist[start-1][end-1], c)
 
-# 최단 경로 구하기
-for k in range(1, n+1):
-  for i in range(1, n+1):
-    for j in range(1, n+1):
-      graph[i][j] = min(graph[i][j], graph[i][k] + graph[k][j])
+for i in range(n):
+    for j in range(n):
+        for k in range(n):
+            dist[j][k] = min(dist[j][k], dist[j][i] + dist[i][k])
 
-# 출력: 최단 경로 값
-for i in range(1, n+1):
-  for j in range(1, n+1):
-    if graph[i][j] == INF:
-      print(0, end = " ")
-    else:
-      print(graph[i][j], end=" ")
-  print()
+for i in range(n):
+    for j in range(n):
+        if dist[i][j] == INF:
+            print(0, end= ' ')
+        else:
+            print(dist[i][j], end=' ')
+    print()

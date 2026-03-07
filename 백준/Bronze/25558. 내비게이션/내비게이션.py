@@ -1,5 +1,7 @@
 # start, end 지점 사이 방문 지점 저장, 맨해튼 거리 정의
 # OEM 순정 내비게이션(짧은 경로, 지점 순서)
+import sys
+input = sys.stdin.readline
 
 N = int(input())
 sx, sy, ex, ey = map(int, input().split())

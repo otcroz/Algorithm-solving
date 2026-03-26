@@ -2,43 +2,44 @@ import sys
 from collections import deque
 input = sys.stdin.readline
 
-nx = [1, -1, 0, 0]
-ny = [0, 0, -1, 1]
-cnt = 0
-draw = []
-arr = []
+n, m = map(int, input().split())
+g = [list(map(int, input().split())) for _ in range(n)]
+v = [[0]*m for _ in range(n)]
+d = [(0, 1), (0, -1), (1, 0), (-1, 0)]
+max_res = 0
+draw = 0
 
-n, m = map(int,input().split())
+def in_range(y, x):
+    if 0 <= y < n and 0<= x < m:
+        return True
 
 def bfs(i, j):
-  dq = deque([(i, j)]) # 큐 선언
-  max = 1
-  arr[i][j] = 0
+    global v, max_res
+    q = deque([(i,j)])
+    v[i][j] = 1
+    cnt = 1
 
-  while dq:
-    x, y = dq.popleft()
-    for i in range(4):
-      dx = x + nx[i]
-      dy = y + ny[i]
-      
-      if dx >= 0 and dx < n and dy >=0 and dy < m:
-        if arr[dx][dy] == 1:
-          arr[dx][dy] = 0
-          max += 1
-          dq.append([dx, dy])
-  draw.append(max)
+    while q:
+        a, b = q.popleft()
+        for dy, dx in d:
+            ny, nx = a + dy, b + dx
 
-for _ in range(n):
-  arr.append(list(map(int, input().split())))
+            if not in_range(ny, nx):
+                continue
+            if v[ny][nx] == 1:
+                continue
+            if g[ny][nx] == 1:
+                q.append((ny, nx))
+                cnt += 1
+                v[ny][nx] = 1
+    
+    max_res = max(max_res, cnt)
 
 for i in range(n):
-  for j in range(m):
-    if arr[i][j] == 1:
-      cnt += 1
-      bfs(i,j)
+    for j in range(m):
+        if g[i][j] == 1 and v[i][j] == 0:
+            bfs(i, j)
+            draw += 1
 
-print(cnt)
-if len(draw) == 0:
-  print(0)
-else:
-  print(max(draw))
+print(draw)
+print(max_res)

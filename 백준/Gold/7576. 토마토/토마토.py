@@ -1,45 +1,45 @@
-from collections import deque
 import sys
+from collections import deque
 input = sys.stdin.readline
 
-arr = []
-day = 1
-nx = [0, 0, -1, 1]
-ny = [1, -1, 0, 0]
-dq = deque([])
+m, n = map(int, input().split())
+g = [list(map(int, input().split())) for _ in range(n)]
+d = [(1,0),(-1,0),(0,1),(0,-1)]
 
-def bfs():
-    global day
-    
-    while dq:
-        x, y = dq.popleft()
-        for i in range(4):
-            dx = x + nx[i]
-            dy = y + ny[i]
+def in_range(y, x):
+    if 0 <= y < n and 0 <= x < m:
+        return True
 
-            if dx >= 0 and dx < m and dy >=0 and dy < n:
-                if arr[dx][dy] == 0:
-                    arr[dx][dy] = arr[x][y] + 1
-                    day = arr[dx][dy]
-                    dq.append([dx, dy])
+def bfs(tomato):
+    global g
+    q = deque(tomato)
 
-n, m = map(int, input().split())
+    while q:
+        a, b = q.popleft()
+        for dy, dx in d:
+            ny, nx = a + dy, b + dx
 
-for _ in range(m):
-    arr.append(list(map(int, input().split())))
+            if not in_range(ny, nx):
+                continue
+            if g[ny][nx] == 0:
+                g[ny][nx] = g[a][b] + 1
+                q.append((ny, nx))
 
-for i in range(m):
-    for j in range(n):
-        if arr[i][j] == 1:
-            dq.append([i, j])
+tomato = []
 
-bfs()
+for i in range(n):
+    for j in range(m):
+        if g[i][j] == 1:
+            tomato.append((i, j))
 
-# check
-for i in range(m):
-    for j in range(n):
-        if arr[i][j] == 0:
-            print(-1)
-            exit(0)
+bfs(tomato)
 
-print(day-1)
+max_day = 0
+for i in range(n):
+    for j in range(m):
+        if g[i][j] == 0:
+            print(-1); exit(0)
+        else:
+            max_day = max(max_day, g[i][j])
+
+print(max_day-1)

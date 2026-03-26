@@ -1,27 +1,31 @@
-from collections import deque
 import sys
+from collections import deque
 input = sys.stdin.readline
 
-arr = []
-nx = [-1, 1, 0 ,0]
-ny = [0, 0, -1, 1]
-dq = deque([(0, 0)])
+n, m = map(int ,input().split())
+g = [list(map(int, input().rstrip())) for _ in range(n)]
+d = [(1, 0), (-1, 0), (0, 1), (0, -1)]
+v = [[0]*m for _ in range(n)]
 
-n, m = map(int, input().split())
+def in_range(y, x):
+    if 0 <= y < n and 0 <= x < m:
+        return True
 
-for _ in range(n):
-    arr.append(list(map(int, input().rstrip('\n'))))
+def bfs(i, j):
+    global v
+    q = deque([(i, j)])
+    v[i][j] = 1
+    
+    while q:
+        a, b = q.popleft()
 
-while(dq):
-    x, y = dq.popleft()
+        for dy, dx in d:
+            ny, nx = a + dy, b + dx
+            if not in_range(ny, nx):
+                continue
+            if g[ny][nx] == 1 and v[ny][nx] == 0:
+                q.append((ny, nx))
+                v[ny][nx] = v[a][b] + 1
 
-    for i in range(4):
-        dx = x + nx[i]
-        dy = y + ny[i]
-
-        if dx >= 0 and dx < n and dy >=0 and dy < m:
-            if arr[dx][dy] == 1: 
-                dq.append([dx, dy])
-                arr[dx][dy] = arr[x][y] + 1
-
-print(arr[n-1][m-1])
+bfs(0, 0)
+print(v[n-1][m-1])

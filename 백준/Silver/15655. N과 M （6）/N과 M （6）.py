@@ -1,19 +1,17 @@
 n, m = map(int, input().split())
 arr = list(map(int, input().split()))
-
 arr.sort()
-s = []
-v = [0] * n
+res = []
 
-def back(a):
-    if len(s) == m:
-        print(' '.join(map(str, s)))
-        return
-    for i in range(a, n):
-        if v[i] == 0:
-            v[i] = 1
-            s.append(arr[i])
-            back(i+1)
-            s.pop()
-            v[i] = 0
+def back(k):
+  if len(res) == m:
+    print(' '.join(map(str, res)))
+    return
+  
+  for i in range(k, len(arr)):
+      if arr[i] not in res:
+        res.append(arr[i])
+        back(i+1)
+        res.pop()
+
 back(0)

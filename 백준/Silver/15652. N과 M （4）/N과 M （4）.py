@@ -1,15 +1,14 @@
-N, M = map(int, input().split())
+n, m = map(int, input().split())
+res = []
 
-s = []
+def back(k):
+  if len(res) == m:
+    print(' '.join(map(str, res)))
+    return
+  
+  for i in range(k, n+1):
+      res.append(i)
+      back(i)
+      res.pop()
 
-def dfs(start):
-    # 길이가 같으면 출력 후 return
-    if len(s) == M:
-        print(' '.join(map(str, s)))
-        return
-    # push, pop
-    for i in range(start, N+1):
-        s.append(i)
-        dfs(i)
-        s.pop() # 마지막 숫자 제거
-dfs(1)
+back(1)

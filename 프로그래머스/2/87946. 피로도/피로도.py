@@ -1,24 +1,22 @@
-
 def solution(k, dungeons):
+    answer = -1
+    v = [] # 방문 던전
     
-    dungeons.sort(key=lambda x:x[-0])
+    def dfs(cur_k, v, cnt): # 현재 피로도, 던전
+        nonlocal answer
+        
+        for i in range(len(dungeons)):
+            if cur_k < dungeons[i][0]:
+                answer = max(answer, cnt)
+                continue
+            if i not in v:
+                v.append(i)
+                dfs(cur_k - dungeons[i][1], v, cnt + 1)
+                v.pop()
+        
+    dfs(k, v, 0)
     
-    v = [0] * len(dungeons)
-    COUNT = len(dungeons)
-    answer = 0
-    
-    def dfs(energy, n):
-        nonlocal answer,k
-        answer = max(answer, n)
-        if answer == COUNT:
-            return
-        for i in range(COUNT):
-            min_hp, use_hp = dungeons[i]
-            if energy >= min_hp and v[i] == 0:
-                v[i] = 1
-                dfs(energy-use_hp, n+1)
-                v[i] = 0
-    
-    dfs(k,0)
-    print(answer)
-    return answer
+    if answer == -1:
+        return 0
+    else:
+        return answer

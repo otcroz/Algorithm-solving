@@ -1,6 +1,5 @@
 def solution(numbers):
     n = len(numbers)
-    
     answer = [-1] * n
     stack = []
     
@@ -10,5 +9,5 @@ def solution(numbers):
             answer[idx] = numbers[i]
         
         stack.append(i)
-    
+        
     return answer

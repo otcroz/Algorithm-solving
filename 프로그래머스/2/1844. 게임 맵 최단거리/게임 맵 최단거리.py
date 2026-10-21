@@ -23,7 +23,6 @@ def solution(maps):
                 if maps[nx][ny] == 0: # 벽일 때
                     continue
                 if v[nx][ny] != 0: # 방문했을 때 
-
                     continue
                 q.append((nx, ny))
                 v[nx][ny] = v[a][b] + 1
